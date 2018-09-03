@@ -29,7 +29,7 @@ public:
 
 	// Accessor Methods:
 
-	Game gameWithID(int) const;
+	Game& gameWithID(int);
 
 	// Mutator Methods:
 

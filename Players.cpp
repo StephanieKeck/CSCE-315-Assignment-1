@@ -21,11 +21,11 @@ using namespace std;
  *  -----------------------------
  *  Returns the Player object associated with 'id'.
  */
-Player Players::playerWithID(int player_id) const {
-	map<int, Player>::const_iterator it = _players.find(player_id);
+Player& Players::playerWithID(int player_id) {
+	map<int, Player>::iterator it = _players.find(player_id);
 
 	// dereference and extract player
-	Player player = it->second;
+	Player& player = it->second;
 
 	return player;
 }

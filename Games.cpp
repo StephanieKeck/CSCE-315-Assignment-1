@@ -20,13 +20,14 @@ using namespace std;
  *  ---------------------------
  *  Returns the Game object associated with 'id'.
  */
-Game Games::gameWithID(int game_id) const {
-	map<int, Game>::const_iterator it = _games.find(game_id);
+Game& Games::gameWithID(int game_id) {
+	map<int, Game>::iterator it = _games.find(game_id);
 
 	// dereference and extract game
-	Game game = it->second;
+	Game& game = it->second;
 
-	return game;}
+	return game;
+}
 
 
 // ----------------

@@ -130,11 +130,11 @@ vector<Player> Player::friendsWhoPlay(int game_id) const {
  *  Returns player's GamePlayRecord object for the game associated
  *  with 'id'.
  */
-GamePlayRecord Player::gamePlayRecordWithID(int game_id) const {
-	map<int, GamePlayRecord>::const_iterator it = _game_play_records.find(game_id);
+GamePlayRecord& Player::gamePlayRecordWithID(int game_id) {
+	map<int, GamePlayRecord>::iterator it = _game_play_records.find(game_id);
 
 	// dereference and extract record
-	GamePlayRecord record = it->second;
+	GamePlayRecord& record = it->second;
 
 	return record;
 }

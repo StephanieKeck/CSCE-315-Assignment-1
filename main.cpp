@@ -118,7 +118,7 @@ int main() {
 				getInt(i, line_of_input.end(), victory_points);
 
 				// get Game object to add victory to
-				Game game = games.gameWithID(game_id);
+				Game& game = games.gameWithID(game_id);
 
 				// add victory to game
 				game.addVictory(victory_id, Victory(victory_name, victory_points));
@@ -138,10 +138,10 @@ int main() {
 				getQuoteDelimitedString(i, line_of_input.end(), player_ign);
 
 				// get player to add gameplay record to
-				Player player = players.playerWithID(player_id);
+				Player& player = players.playerWithID(player_id);
 
 				// get game to add to ganeplay record
-				Game game = games.gameWithID(game_id);
+				Game& game = games.gameWithID(game_id);
 
 				// add gameplay record to player
 				player.addGamePlayRecord(game_id, GamePlayRecord(game, player_ign));
@@ -157,8 +157,8 @@ int main() {
 				getID(i, line_of_input.end(), player_id2);
 
 				// get players to make friends
-				Player player1 = players.playerWithID(player_id1);
-				Player player2 = players.playerWithID(player_id2);
+				Player& player1 = players.playerWithID(player_id1);
+				Player& player2 = players.playerWithID(player_id2);
 
 				// set friend relationships
 				player1.addFriend(player2);
@@ -179,10 +179,10 @@ int main() {
 				getID(i, line_of_input.end(), victory_id);
 
 				// get player to get gameplay record from
-				Player player = players.playerWithID(player_id);
+				Player& player = players.playerWithID(player_id);
 
 				// get gameplay record to add victory to
-				GamePlayRecord record = player.gamePlayRecordWithID(game_id);
+				GamePlayRecord& record = player.gamePlayRecordWithID(game_id);
 
 				// add victory
 				record.addVictory(victory_id);

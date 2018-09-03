@@ -39,7 +39,7 @@ public:
 
 	// Accessor Methods:
 
-	Player playerWithID(int) const;
+	Player& playerWithID(int);
 	std::vector<Player> playersWhoPlay(int) const;
 	std::vector<Player> playersWithVictory(int, int) const;
 	std::vector<Player> players() const;

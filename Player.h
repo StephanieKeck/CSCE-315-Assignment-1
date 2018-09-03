@@ -65,7 +65,7 @@ public:
 	bool hasVictory(int, int) const;
 	std::vector<Player> friends() const { return _friends; }
 	std::vector<Player> friendsWhoPlay(int) const;
-	GamePlayRecord gamePlayRecordWithID(int) const;
+	GamePlayRecord& gamePlayRecordWithID(int);
 	std::vector<GamePlayRecord> gamePlayRecords() const;
 
 	// Mutator Methods:
