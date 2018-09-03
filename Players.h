@@ -1,16 +1,55 @@
+// Stephanie Keck
+// UIN 526009919
+// CSCE 315 508
+// Project 1
+
+/*  Players Class
+ *  -------------
+ *  Database of all players added with the "AddPlayer" command.
+ *  
+ *  Accessor Methods:
+ *  
+ *  * Player playerWithID(int id) - returns the Player object
+ *    associated with 'id'.
+ *  * vector<Player> playersWhoPlay(int id) - returns a list
+ *    of the players who play the game associated with 'id'.
+ *  * vector<Player> playersWithVictory(int game_id, int victory_id) -
+ *    returns a list of the players who have achieved the
+ *    victory associated with 'victory_id' in the game
+ *    associated with 'game_id'.
+ *  * vector<Player> players() - returns a list of all players
+ *    in this database.
+ *
+ *  Mutator Methods:
+ *
+ *  * void addPlayer(int id, Player player) - adds 'player' to
+ *    database and associates it with 'id'.
+ */
+
+
 #ifndef PLAYERS_H
 #define PLAYERS_H
 
-class Players
-{
+#include <vector>
+#include <map>
+#include "Player.h"
+
+class Players {
 public:
+
+	// Accessor Methods:
+
+	Player playerWithID(int) const;
+	std::vector<Player> playersWhoPlay(int) const;
+	std::vector<Player> playersWithVictory(int, int) const;
+	std::vector<Player> players() const;
+
+	// Mutator Methods:
+
 	void addPlayer(int, Player);
-	Player playerWithID(int);
-	vector<Player> playersWhoPlay(int);
-	vector<Player> playersWithVictory(int, int);
-	vector<Player> players();
+	
 private:
-	map<int, Player> _players;
+	std::map<int, Player> _players;
 };
 
 #endif
