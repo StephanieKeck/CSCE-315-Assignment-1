@@ -5,17 +5,23 @@ class Player
 {
 public:
 	Player(std::string);
-	std::string name() { return _name; }
-	std::vector<Player> friends() { return _friends; }
-	GamePlayRecord gamePlayRecordForGameID(int);
-	int gamerscore();
+
 	void addFriend(Player);
-	void addGamePlayRecord(GamePlayRecord);
+	void addGamePlayRecord(int, GamePlayRecord);
+
+	std::string name() { return _name; }
+	int gamerscore();
+	bool plays(int);
+	bool hasVictory(int, int);
+
+	std::vector<Player> friends() { return _friends; }
+	std::vector<Player> friendsWhoPlay(int);
+	GamePlayRecord gamePlayRecordWithID(int);
 
 private:
 	std::string _name;
 	std::vector<Player> _friends;
-	std::map<int, GamePlayRecord> _gamePlayRecords;
+	std::map<int, GamePlayRecord> _game_play_records;
 };
 
 #endif
