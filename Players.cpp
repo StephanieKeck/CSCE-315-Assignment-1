@@ -27,7 +27,8 @@ Player Players::playerWithID(int player_id) const {
 	// dereference and extract player
 	Player player = it->second;
 
-	return player;}
+	return player;
+}
 
 
 /*  playersWhoPlay(int id) function

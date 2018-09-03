@@ -110,6 +110,9 @@ int main() {
 				string victory_name;
 				i = getQuoteDelimitedString(i, line_of_input.end(), victory_name);
 
+				// move ahead of closing quote
+				i++;
+
 				int victory_points;
 				getInt(i, line_of_input.end(), victory_points);
 
@@ -141,7 +144,6 @@ int main() {
 
 				// add gameplay record to player
 				player.addGamePlayRecord(game_id, GamePlayRecord(game, player_ign));
-
 
 			} else if (command == add_friends_command) {
 
@@ -178,7 +180,7 @@ int main() {
 				// get player to get gameplay record from
 				Player player = players.playerWithID(player_id);
 
-				// get ganeplay record to add victory to
+				// get gameplay record to add victory to
 				GamePlayRecord record = player.gamePlayRecordWithID(game_id);
 
 				// add victory

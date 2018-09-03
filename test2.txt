@@ -1,0 +1,5 @@
+AddPlayer 10 "bob"
+AddGame 30 "tetris"
+AddVictory 30 90 "win" 50
+Plays 10 30 "xyz"
+WinVictory 10 30 90
