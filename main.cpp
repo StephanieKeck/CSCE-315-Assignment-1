@@ -41,6 +41,22 @@ int main() {
 	string line_of_input;
 
 	// process each line of input
+
+	// predefined command words so they can be
+	// changed in one place
+	const string add_player_command = "AddPlayer";
+	const string add_game_command = "AddGame";
+	const string add_victory_command = "AddVictory";
+	const string plays_command = "Plays";
+	const string add_friends_command = "AddFriends";
+	const string win_victory_command = "WinVictory";
+	const string friends_who_play_command = "FriendsWhoPlay";
+	const string compare_players_command = "ComparePlayers";
+	const string summarize_player_command = "SummarizePlayer";
+	const string summarize_game_command = "SummarizeGame";
+	const string summarize_victory_command = "SummarizeVictory";
+	const string victory_ranking_command = "VictoryRanking";
+
 	while (getline(cin, line_of_input)) {
 		// storage space for command word
 		string command;
@@ -50,21 +66,6 @@ int main() {
 
 		// get command word
 		i = getCommand(line_of_input.begin(), line_of_input.end(), command);
-
-		// predefined command words so they can be
-		// changed in one place
-		const string add_player_command = "AddPlayer";
-		const string add_game_command = "AddGame";
-		const string add_victory_command = "AddVictory";
-		const string plays_command = "Plays";
-		const string add_friends_command = "AddFriends";
-		const string win_victory_command = "WinVictory";
-		const string friends_who_play_command = "FriendsWhoPlay";
-		const string compare_players_command = "ComparePlayers";
-		const string summarize_player_command = "SummarizePlayer";
-		const string summarize_game_command = "SummarizeGame";
-		const string summarize_victory_command = "SummarizeVictory";
-		const string victory_ranking_command = "VictoryRanking";
 
 		// skip blank lines
 		if (i != line_of_input.end()) {
