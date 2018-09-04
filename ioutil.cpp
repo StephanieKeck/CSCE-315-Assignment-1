@@ -509,8 +509,8 @@ void outputPlayerComparisonForGame(ostream& os, const Player& player,
 /*  outputPlayerSummary function
  *  ----------------------------
  *  Given a player, outputs a table comparing their gamerscores,
- *  victories, and IGNs accross games and a table comparing the
- *  total gamerscores of their friends. Outputs to the given ostream.
+ *  victories, and IGNs accross games and a list of their
+ *  friends. Outputs to the given ostream.
  */
 void outputPlayerSummary(ostream& os, Player player) {
 	// extract and sort gameplay records by gamerscore
@@ -606,23 +606,9 @@ void outputPlayerSummary(ostream& os, Player player) {
 			friend_name_column_header);
 
 
-		// set up friend gamerscore (total) column
-		vector<string> friend_gamerscore_column;
-
-		// generate friend gamerscore (total) strings
-		transform(friends.begin(), friends.end(), back_inserter(friend_gamerscore_column), 
-			generatePlayerGamerscoreString);
-
-		// add column header
-		const string friend_gamerscore_column_header = "Gamerscore";
-		friend_gamerscore_column.insert(friend_gamerscore_column.begin(), 
-			friend_gamerscore_column_header);
-
-
 		// populate table 2
 		vector< vector<string> > friends_stats_table;
 		friends_stats_table.push_back(friend_name_column);
-		friends_stats_table.push_back(friend_gamerscore_column);
 
 		// output table 2
 		outputTable(os, friends_stats_table);
