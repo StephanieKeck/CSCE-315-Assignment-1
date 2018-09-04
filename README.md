@@ -21,7 +21,7 @@ on \*nix systems.
 
 ### Accelerated C++ by Andrew Koenig and Barabara E. Moo.
 
-Main C++ reference. The `space` and `not_space` functions were taken from it wholesale and the parsing functions of the form `get<item>` are similar to the `split` function introduced in Chapter 6.
+Main C++ reference. The `space` and `not_space` functions were taken from it wholesale and the parsing functions of the form `get<item>` in `ioutil.cpp` are similar to the `split` function introduced in Chapter 6.
 
 ### http://www.cplusplus.com/
 
