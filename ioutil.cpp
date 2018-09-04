@@ -614,7 +614,7 @@ void outputPlayerSummary(ostream& os, Player player) {
 			generatePlayerGamerscoreString);
 
 		// add column header
-		const string friend_gamerscore_column_header = "Gamerscore"
+		const string friend_gamerscore_column_header = "Gamerscore";
 		friend_gamerscore_column.insert(friend_gamerscore_column.begin(), 
 			friend_gamerscore_column_header);
 
@@ -638,14 +638,13 @@ void outputPlayerSummary(ostream& os, Player player) {
  *  given ostream.
  */
 void outputGameSummary(ostream& os, Game game, int game_id, vector<Player> players) {
+	// sort players by gamerscore and extract gameplay records
+	sort(players.begin(), players.end(), comparePlayersByGamerscore);
+	vector<GamePlayRecord> records = extractGamePlayRecordsForGameID(players, game_id);
 	
 	// only output table 1 if there are players who play
 	// this game
 	if (!players.empty()) {
-
-		// sort players by gamerscore and extract gameplay records
-		sort(players.begin(), players.end(), comparePlayersByGamerscore);
-		vector<GamePlayRecord> records = extractGamePlayRecordsForGameID(players, game_id);
 
 		// set up player name column
 		vector<string> player_name_column;
@@ -851,7 +850,7 @@ void outputVictorySummary(ostream& os, Victory victory, int victory_id, Game gam
 
 		// add column header
 		const string player_ign_column_header = "IGN";
-		player_ign_column_strings.insert(player_ign_column.begin(), 
+		player_ign_column.insert(player_ign_column.begin(), 
 			player_ign_column_header);
 
 		// populate table
