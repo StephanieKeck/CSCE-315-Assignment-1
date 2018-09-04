@@ -21,11 +21,8 @@
  *  * bool hasVictory(int game_id, int victory_id) - returns 
  *    whether the player has achieved the victory associated
  *    with 'victory_id' in the game associated with 'game_id'.
- *  * vector<Player> friends() - returns list of the player's
- *    friends.
- *  * vector<Player> friendsWhoPlay(int id) - returns list of
- *    the player's friends who play the game associated with
- *    'id'.
+ *  * vector<int> friendIFs() - returns list of the player's
+ *    friends' IDs.
  *  * GamePlayRecord gamePlayRecordWithID(int id) - returns
  *    player's GamePlayRecord object for the game associated
  *    with 'id'.
@@ -63,18 +60,17 @@ public:
 	int gamerscore() const;
 	bool plays(int) const;
 	bool hasVictory(int, int) const;
-	std::vector<Player> friends() const { return _friends; }
-	std::vector<Player> friendsWhoPlay(int) const;
+	std::vector<int> friendIDs() const { return _friendIDs; }
 	GamePlayRecord& gamePlayRecordWithID(int);
 	std::vector<GamePlayRecord> gamePlayRecords() const;
 
 	// Mutator Methods:
 
-	void addFriend(Player);
+	void addFriendID(int);
 	void addGamePlayRecord(int, GamePlayRecord);
 private:
 	std::string _name;
-	std::vector<Player> _friends;
+	std::vector<int> _friendIDs;
 	std::map<int, GamePlayRecord> _game_play_records;
 };
 

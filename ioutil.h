@@ -60,7 +60,7 @@ std::string::const_iterator getQuoteDelimitedString(std::string::const_iterator,
 void outputPlayerComparisonForGame(std::ostream& os, std::vector<Player> players, const Game& game, int game_id);
 void outputPlayerComparisonForGame(std::ostream&, const Player&, const Player&, const Game&, int);
 void outputPlayerComparisonForGame(std::ostream&, const Player&, std::vector<Player>, const Game&, int);
-void outputPlayerSummary(std::ostream&, Player);
+void outputPlayerSummary(std::ostream&, Player, std::vector<Player>);
 void outputGameSummary(std::ostream&, Game, int, std::vector<Player>);
 void outputVictorySummary(std::ostream&, Victory, int, Game, int, std::vector<Player>);
 void outputPlayerComparison(std::ostream&, std::vector<Player>);

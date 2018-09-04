@@ -156,13 +156,13 @@ int main() {
 				int player_id2;
 				getID(i, line_of_input.end(), player_id2);
 
-				// get players to make friends
-				Player& player1 = players.playerWithID(player_id1);
-				Player& player2 = players.playerWithID(player_id2);
+				// get players
+				Player player1 = players.playerWithID(player_id1);
+				Player player2 = players.playerWithID(player_id2);
 
 				// set friend relationships
-				player1.addFriend(player2);
-				player2.addFriend(player1);
+				player1.addFriendID(player_id2);
+				player2.addFriendID(player_id1);
 
 
 			} else if (command == win_victory_command) {
@@ -208,7 +208,7 @@ int main() {
 				     << endl;
 
 				// get friends who play game
-				vector<Player> friends_who_play = player.friendsWhoPlay(game_id);
+				vector<Player> friends_who_play = players.friendsOfIDWhoPlay(player_id, game_id);
 
 				// generate output table
 				outputPlayerComparisonForGame(cout, player, friends_who_play, game, game_id);
@@ -254,13 +254,16 @@ int main() {
 				// look up player
 				Player player = players.playerWithID(player_id);
 
+				// get player friends
+				vector<Player> friends = players.friendsOfID(player_id);
+
 				// initial output
 				cout << "Player: " << player.name() << endl
 				     << "Total Gamerscore: " << player.gamerscore() << endl
 				     << endl;
 
 				// generate output table
-				outputPlayerSummary(cout, player);
+				outputPlayerSummary(cout, player, friends);
 
 
 			} else if (command == summarize_game_command) {

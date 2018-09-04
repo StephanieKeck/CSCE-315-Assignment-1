@@ -102,29 +102,6 @@ bool Player::hasVictory(int game_id, int victory_id) const {
 }
 
 
-/*  friendsWhoPlay(int game_id) function
- *  ------------------------------------
- *  Returns list of the player's friends who play the game associated 
- *  with 'id'.
- */
-vector<Player> Player::friendsWhoPlay(int game_id) const {
-	// empty vector to accumulate result
-	vector<Player> friends_who_play;
-
-	// iterate over friends to extract those who play game
-	for (vector<Player>::const_iterator it = _friends.begin();
-		it != _friends.end(); ++it) {
-		// dereference to get friend
-		Player player = *it;
-		// if friend plays game, add to result
-		if (player.plays(game_id))
-			friends_who_play.push_back(player);
-	}
-
-	return friends_who_play;
-}
-
-
 /*  gamePlayRecordWithID(int game_id) function
  *  ------------------------------------------
  *  Returns player's GamePlayRecord object for the game associated
@@ -167,8 +144,8 @@ vector<GamePlayRecord> Player::gamePlayRecords() const {
  *  ---------------------------------
  *  Adds 'player' as a friend of this player.
  */
-void Player::addFriend(Player player) {
-	_friends.push_back(player);
+void Player::addFriendID(int id) {
+	_friendIDs.push_back(id);
 }
 
 
