@@ -212,7 +212,7 @@ void outputTable(ostream& os, vector< vector<string> > columns) {
 	while (row_index < row_count) {
 
 		// output each column for this row
-		for (vector< vector<string> >::size_type column_index;
+		for (vector< vector<string> >::size_type column_index = 0;
 			column_index != columns.size(); ++column_index) {
 			// extract column
 			vector<string> column = columns[column_index];
