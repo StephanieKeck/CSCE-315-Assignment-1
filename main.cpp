@@ -13,7 +13,7 @@
  *
  *  * The program reads one line of input at a time. It then extracts
  *    relevant information from each line and generates objects
- *    appropriately.
+ *    appropriately. Parsing utilities are provided by ioutil.h.
  *
  *  * When asked to output data, it queries the two databases and
  *    uses utility functions from ioutil.h to format the output.
@@ -331,11 +331,10 @@ int main() {
 
 				// generate output table
 				outputPlayerComparison(cout, allPlayers);
-
-
 			}
 		}
 	}
 
+	// exit with code 0
 	return 0;
 }

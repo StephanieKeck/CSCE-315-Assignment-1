@@ -27,11 +27,21 @@ using namespace std;
 // Predicate Methods:
 
 
+/*  not_space function
+ *  ----------------------------------------
+ *  Returns whether character is not whitespace. For use in find
+ *  operations and string parsing.
+ */
 bool not_space(char c) {
 	return !isspace(c);
 }
 
 
+/*  space function
+ *  ----------------------------------------
+ *  Returns whether character is whitespace. For use in find
+ *  operations and string parsing.
+ */
 bool space(char c) {
 	return isspace(c);
 }
@@ -40,16 +50,32 @@ bool space(char c) {
 // Comparison Methods:
 
 
+/*  comparePlayersByGamerscore function
+ *  ----------------------------------------
+ *  Compares players by gamerscore, sort descending. For use in sorting
+ *  methods.
+ */
 bool comparePlayersByGamerscore(const Player& player1, const Player& player2) {
 	return player1.gamerscore() > player2.gamerscore();
 }
+
+
+/*  compareGamePlayRecordsByGamerscore function
+ *  ----------------------------------------
+ *  Compares gameplay records by gamerscore, sort descending. For use in
+ *  sorting methods.
+ */
 
 bool compareGamePlayRecordsByGamerscore(const GamePlayRecord& record1, const GamePlayRecord& record2) {
 	return record1.gamerscore() > record2.gamerscore();
 }
 
 
-// String Generation Methods:
+/*  String Generation Methods:
+ *  --------------------------------------
+ *  Given various relevant data, these functions format that data
+ *  for display in a table.
+ */
 
 
 string generatePlayerNameString(const Player& player) {
@@ -65,7 +91,8 @@ string generateGameNameString(const GamePlayRecord& record) {
 }
 
 string generateGamePlayRecordVictoryCountString(const GamePlayRecord& record) {
-	return to_string(record.victories().size());
+	return to_string(record.victories().size()) + "/" + 
+		to_string(record.game().victories().size());
 }
 
 string generateGamePlayRecordGamerscoreString(const GamePlayRecord& record) {
@@ -88,6 +115,11 @@ string generateVictoryWinCountString(int count) {
 // Data Manipulation Methods:
 
 
+/*  extractGamePlayRecordsForGameID function
+ *  ----------------------------------------
+ *  Given a vector of players, a victory id, extracts and returns their
+ *  gameplay records in a new vector.
+ */
 vector<GamePlayRecord> extractGamePlayRecordsForGameID(vector<Player> players, int game_id) {
 	vector<GamePlayRecord> records;
 
@@ -101,6 +133,12 @@ vector<GamePlayRecord> extractGamePlayRecordsForGameID(vector<Player> players, i
 	return records;
 }
 
+
+/*  extractPlayersWithVictoryID function
+ *  ------------------------------------
+ *  Given a vector of players, a victory id, and a game id. extracts
+ *  only those players who have achieved the associated victory.
+ */
 vector<Player> extractPlayersWithVictoryID(vector<Player> players, int victory_id, int game_id) {
 	vector<Player> players_with_id;
 
@@ -114,6 +152,13 @@ vector<Player> extractPlayersWithVictoryID(vector<Player> players, int victory_i
 	return players_with_id;
 }
 
+
+/*  countGamePlayRecordsWithVictoryIDs function
+ *  -------------------------------------------
+ *  Given a vector of gameplay records and vector of victory ids, returns
+ *  a vector in which each entry corresponds to a victory id and represents
+ *  the number of gameplay records which include that victory.
+ */
 vector<int> countGamePlayRecordsWithVictoryIDs(vector<GamePlayRecord> records, 
 	vector<int> victory_ids) {
 	vector<int> id_counts;
@@ -142,6 +187,11 @@ vector<int> countGamePlayRecordsWithVictoryIDs(vector<GamePlayRecord> records,
 // Output Utilities:
 
 
+/*  tableWidth function
+ *  -------------------
+ *  Given a vector of ints representing the widths of the columns
+ *  of a table, returns the width of the entire table.
+ */
 int tableWidth(vector<int> column_widths) {
 	int total_width = 0;
 
@@ -154,11 +204,19 @@ int tableWidth(vector<int> column_widths) {
 	return total_width;
 }
 
+
+/*  generateColumnWidth function
+ *  ----------------------------
+ *  Given a vector of strings representing a column with rows, returns
+ *  the width of that column, which is equal to the length of the longest
+ *  string plus padding.
+ */
 int generateColumnWidth(vector<string> column) {
+	// set padding amount
 	int padding = 3;
 
+	// find longest string
 	int longest_string_length = 0;
-
 	for (vector<string>::const_iterator it = column.begin();
 		it != column.end(); ++it) {
 		string current_string = *it;
@@ -169,10 +227,18 @@ int generateColumnWidth(vector<string> column) {
 		}
 	}
 
+	// return longest string length + padding
 	return longest_string_length + padding;
 }
 
 
+/*  outputTable function
+ *  --------------------
+ *  Takes a vector of vector of strings representing a table, where the
+ *  vectors represent each table columns and their strings represent the
+ *  rows of those columns. Outputs a formatted table to the command line.
+ *  Assumes the first entry in each column represents a column header.
+ */
 void outputTable(ostream& os, vector< vector<string> > columns) {
 	// generate widths for each column
 	vector<int> column_widths;
@@ -239,46 +305,76 @@ void outputTable(ostream& os, vector< vector<string> > columns) {
 // Input Utilities:
 
 
+/*  getCommand function
+ *  -------------------
+ *  Extracts a single word from the string, returning an iterator 
+ *  to the position in the string after the word.
+ */
 string::const_iterator getCommand(string::const_iterator begin, string::const_iterator end, 
 	string& dest) {
 	typedef string::const_iterator iter;
 
+	// find first nonspace character
 	iter i = find_if(begin, end, not_space);
 
+	// find position after next nonspace character
 	iter j = find_if(i, end, space);
 
+	// extract and pass to dest
 	if (i != end)
 		dest = string(i, j);
 
+	// return new iterator position
 	return j;
 }
 
+
+/*  getInt function
+ *  ---------------
+ *  Extracts an integer from a string, returning an iterator to
+ *  the position in the string after the integer.
+ */
 string::const_iterator getInt(string::const_iterator begin, string::const_iterator end, 
 	int& dest) {
 	typedef string::const_iterator iter;
 
+	// find first nonspace character
 	iter i = find_if(begin, end, not_space);
 
+	// find position after next nonspace character
 	iter j = find_if(i, end, space);
 
+	// convert to integer and pass to dest
 	if (i != end)
 		dest = stoi(string(i, j));
 
+	// return new iterator position
 	return j;
 }
 
+
+/*  getQuoteDelimitedString function
+ *  --------------------------------
+ *  Extracts a double-quote-delimited string into dest and returns
+ *  an iterator at the position in the string after the second 
+ *  double quote.
+ */
 string::const_iterator getQuoteDelimitedString(string::const_iterator begin, 
 	string::const_iterator end, string& dest) {
 	typedef string::const_iterator iter;
 
+	// find first quote
 	iter i = find(begin, end, '"');
 	++i;
 
+	// find end of delimited string
 	iter j = find(i, end, '"');
 
+	// if delimited string was found, pass it to dest
 	if (i != end)
 		dest = string(i, j);
 
+	// return new iterator position
 	return j;
 }
 
@@ -286,40 +382,109 @@ string::const_iterator getQuoteDelimitedString(string::const_iterator begin,
 // Output Utilities:
 
 
-void outputPlayerComparisonForGame(ostream& os, vector<Player> players, const Game& game, int game_id) {
+/*  outputPlayerComparisonForGame function
+ *  --------------------------------------
+ *  Given a vector of players and a game, outputs a table
+ *  comparing player gamerscores (game and total), victories,
+ *  and IGNs. Outputs to the given ostream.
+ */
+void outputPlayerComparisonForGame(ostream& os, vector<Player> players, 
+	const Game& game, int game_id) {
+	// sort players by gamerscore and then extract their gameplay records
 	sort(players.begin(), players.end(), comparePlayersByGamerscore);
+	vector<GamePlayRecord> records = extractGamePlayRecordsForGameID(
+		players, game_id);
 
-	vector<string> player_name_column_strings;
-	vector<string> player_victories_column_strings;
-	vector<string> gamerscore_column_strings;
-	vector<string> total_gamerscore_column_strings;
-	vector<string> player_ign_column_strings;
 
-	vector<GamePlayRecord> records = extractGamePlayRecordsForGameID(players, game_id);
+	// only output table if there are players
+	if (!players.empty()) {
 
-	transform(players.begin(), players.end(), back_inserter(player_name_column_strings), generatePlayerNameString);
-	transform(records.begin(), records.end(), back_inserter(player_victories_column_strings), generateGamePlayRecordVictoryCountString);
-	transform(records.begin(), records.end(), back_inserter(gamerscore_column_strings), generateGamePlayRecordGamerscoreString);
-	transform(players.begin(), players.end(), back_inserter(total_gamerscore_column_strings), generatePlayerGamerscoreString);
-	transform(records.begin(), records.end(), back_inserter(player_ign_column_strings), generateGamePlayRecordIGNString);
+		// set up the player names column
+		vector<string> player_name_column;
 
-	player_name_column_strings.insert(player_name_column_strings.begin(), "Player");
-	player_victories_column_strings.insert(player_victories_column_strings.begin(), "Victories");
-	gamerscore_column_strings.insert(gamerscore_column_strings.begin(), "Gamerscore (" + game.name() + ")");
-	total_gamerscore_column_strings.insert(total_gamerscore_column_strings.begin(), "Gamerscore (Total)");
-	player_ign_column_strings.insert(player_ign_column_strings.begin(), "IGN");
+		// generate strings of player names from the Player objects
+		transform(players.begin(), players.end(), 
+			back_inserter(player_name_column), generatePlayerNameString);
 
-	vector< vector<string> > table;
-	table.push_back(player_name_column_strings);
-	table.push_back(player_victories_column_strings);
-	table.push_back(gamerscore_column_strings);
-	table.push_back(total_gamerscore_column_strings);
-	table.push_back(player_ign_column_strings);
+		// add column header
+		const string player_name_column_header = "Player";
+		player_name_column.insert(player_name_column.begin(), 
+			player_name_column_header);
 
-	outputTable(os, table);
+
+		// set up victories won/total column
+		vector<string> player_victories_column;
+
+		// generate strings of player victories won/total
+		transform(records.begin(), records.end(), back_inserter(
+			player_victories_column), generateGamePlayRecordVictoryCountString);
+
+		// add column header
+		const string player_victories_column_header = "Victories";
+		player_victories_column.insert(player_victories_column.begin(), 
+			player_victories_column_header);
+
+
+		// set up player gamerscore (for game) column
+		vector<string> game_gamerscore_column;
+
+		// generate strings of player gamerscores (for game)
+		transform(records.begin(), records.end(), back_inserter(game_gamerscore_column), 
+			generateGamePlayRecordGamerscoreString);
+
+		// add column header
+		const string game_gamerscore_column_header = "Gamerscore (" + game.name() + ")";
+		game_gamerscore_column.insert(game_gamerscore_column.begin(), 
+			game_gamerscore_column_header);
+
+
+		// set up player gamerscore column
+		vector<string> gamerscore_column;
+
+		// generate strings of player gamerscores
+		transform(players.begin(), players.end(), back_inserter(gamerscore_column), 
+			generatePlayerGamerscoreString);
+
+		// add column header
+		const string gamerscore_column_header = "Gamerscore (Total)";
+		gamerscore_column.insert(gamerscore_column.begin(), 
+			gamerscore_column_header);
+
+
+		// set up column of player IGNs
+		vector<string> player_ign_column;
+
+		// generate strings of player IGNs
+		transform(records.begin(), records.end(), back_inserter(player_ign_column), 
+			generateGamePlayRecordIGNString);
+
+		// add column header
+		const string player_ign_column_header = "IGN";
+		player_ign_column.insert(player_ign_column.begin(), 
+			player_ign_column_header);
+
+
+		// populate table
+		vector< vector<string> > table;
+		table.push_back(player_name_column);
+		table.push_back(player_victories_column);
+		table.push_back(game_gamerscore_column);
+		table.push_back(gamerscore_column);
+		table.push_back(player_ign_column);
+
+		// output table
+		outputTable(os, table);
+	}
 }
 
-void outputPlayerComparisonForGame(ostream& os, const Player& player1, const Player& player2, const Game& game, int game_id) {
+
+/*  outputPlayerComparisonForGame overload function
+ *  -----------------------------------------------
+ *  Overload of the outputPlayerComparisonForGame function for when
+ *  there are only two players.
+ */
+void outputPlayerComparisonForGame(ostream& os, const Player& player1, 
+	const Player& player2, const Game& game, int game_id) {
 	vector<Player> players;
 	players.push_back(player1);
 	players.push_back(player2);
@@ -327,164 +492,421 @@ void outputPlayerComparisonForGame(ostream& os, const Player& player1, const Pla
 	outputPlayerComparisonForGame(os, players, game, game_id);
 }
 
-void outputPlayerComparisonForGame(ostream& os, const Player& player, vector<Player> players, const Game& game, int game_id) {
+
+/*  outputPlayerComparisonForGame overload function
+ *  -----------------------------------------------
+ *  Overload of the outputPlayerComparisonForGame function for comparing
+ *  one player to a vector of players.
+ */
+void outputPlayerComparisonForGame(ostream& os, const Player& player, 
+	vector<Player> players, const Game& game, int game_id) {
 	players.insert(players.begin(), player);
 
 	outputPlayerComparisonForGame(os, players, game, game_id);
 }
 
-void outputPlayerSummary(ostream& os, Player player) {
-	vector<GamePlayRecord> records = player.gamePlayRecords();
 
+/*  outputPlayerSummary function
+ *  ----------------------------
+ *  Given a player, outputs a table comparing their gamerscores,
+ *  victories, and IGNs accross games and a table comparing the
+ *  total gamerscores of their friends. Outputs to the given ostream.
+ */
+void outputPlayerSummary(ostream& os, Player player) {
+	// extract and sort gameplay records by gamerscore
+	vector<GamePlayRecord> records = player.gamePlayRecords();
 	sort(records.begin(), records.end(), compareGamePlayRecordsByGamerscore);
 
-	vector<string> game_name_column_strings;
-	vector<string> player_victories_column_strings;
-	vector<string> gamerscore_column_strings;
-	vector<string> player_ign_column_strings;
+	// only output table 1 if the player plays at least
+	// one game
+	if (!records.empty()) {
 
-	transform(records.begin(), records.end(), back_inserter(game_name_column_strings), generateGameNameString);
-	transform(records.begin(), records.end(), back_inserter(player_victories_column_strings), generateGamePlayRecordVictoryCountString);
-	transform(records.begin(), records.end(), back_inserter(gamerscore_column_strings), generateGamePlayRecordGamerscoreString);
-	transform(records.begin(), records.end(), back_inserter(player_ign_column_strings), generateGamePlayRecordIGNString);
+		// set up game name column
+		vector<string> game_name_column;
 
-	game_name_column_strings.insert(game_name_column_strings.begin(), "Game");
-	player_victories_column_strings.insert(player_victories_column_strings.begin(), "Victories");
-	gamerscore_column_strings.insert(gamerscore_column_strings.begin(), "Gamerscore");
-	player_ign_column_strings.insert(player_ign_column_strings.begin(), "IGN");
+		// generate game name strings
+		transform(records.begin(), records.end(), back_inserter(game_name_column), 
+			generateGameNameString);
 
-	vector< vector<string> > player_stats_table;
-	player_stats_table.push_back(game_name_column_strings);
-	player_stats_table.push_back(player_victories_column_strings);
-	player_stats_table.push_back(gamerscore_column_strings);
-	player_stats_table.push_back(player_ign_column_strings);
+		// add column header
+		const string game_name_column_header = "Game";
+		game_name_column.insert(game_name_column.begin(), 
+			game_name_column_header);
 
-	outputTable(os, player_stats_table);
-	os << endl;
 
-	vector<string> friend_name_column_strings;
-	vector<string> friend_gamerscore_column_strings;
+		// set up player victories won/total column
+		vector<string> player_victories_column;
 
+		// generate player victories won/total strings
+		transform(records.begin(), records.end(), back_inserter(player_victories_column), 
+			generateGamePlayRecordVictoryCountString);
+
+		// add column header
+		const string player_victories_column_header = "Victories";
+		player_victories_column.insert(player_victories_column.begin(), 
+			player_victories_column_header);
+
+
+		// set up player gamerscore (per game) column
+		vector<string> gamerscore_column;
+
+		// generate player gamerscore (per game) strings
+		transform(records.begin(), records.end(), back_inserter(gamerscore_column), 
+			generateGamePlayRecordGamerscoreString);
+
+		// add column header
+		const string gamerscore_column_header = "Gamerscore";
+		gamerscore_column.insert(gamerscore_column.begin(), gamerscore_column_header);
+
+
+		// set up player IGN column
+		vector<string> player_ign_column;
+		
+		// generate player IGN strings
+		transform(records.begin(), records.end(), back_inserter(player_ign_column), 
+			generateGamePlayRecordIGNString);
+
+		// add column header
+		const string player_ign_column_header = "IGN";
+		player_ign_column.insert(player_ign_column.begin(), player_ign_column_header);
+
+
+		// populate table 1
+		vector< vector<string> > player_stats_table;
+		player_stats_table.push_back(game_name_column);
+		player_stats_table.push_back(player_victories_column);
+		player_stats_table.push_back(gamerscore_column);
+		player_stats_table.push_back(player_ign_column);
+
+		// output table 1
+		outputTable(os, player_stats_table);
+
+	}
+
+	// look up player friends
 	vector<Player> friends = player.friends();
 
-	transform(friends.begin(), friends.end(), back_inserter(friend_name_column_strings), generatePlayerNameString);
-	transform(friends.begin(), friends.end(), back_inserter(friend_gamerscore_column_strings), generatePlayerGamerscoreString);
+	// only output table 2 if player has friends
+	if (!friends.empty()) {
 
-	friend_name_column_strings.insert(friend_name_column_strings.begin(), "Friend");
-	friend_gamerscore_column_strings.insert(friend_gamerscore_column_strings.begin(), "IGN");
+		// new line to separate from last table
+		os << endl;
 
-	vector< vector<string> > friends_stats_table;
-	friends_stats_table.push_back(friend_name_column_strings);
-	friends_stats_table.push_back(friend_gamerscore_column_strings);
 
-	outputTable(os, friends_stats_table);
+		// set up friend name column
+		vector<string> friend_name_column;
+
+		// generate friend name strings
+		transform(friends.begin(), friends.end(), back_inserter(friend_name_column), 
+			generatePlayerNameString);
+
+		// add column header
+		const string friend_name_column_header = "Friend";
+		friend_name_column.insert(friend_name_column.begin(), 
+			friend_name_column_header);
+
+
+		// set up friend gamerscore (total) column
+		vector<string> friend_gamerscore_column;
+
+		// generate friend gamerscore (total) strings
+		transform(friends.begin(), friends.end(), back_inserter(friend_gamerscore_column), 
+			generatePlayerGamerscoreString);
+
+		// add column header
+		const string friend_gamerscore_column_header = "Gamerscore"
+		friend_gamerscore_column.insert(friend_gamerscore_column.begin(), 
+			friend_gamerscore_column_header);
+
+
+		// populate table 2
+		vector< vector<string> > friends_stats_table;
+		friends_stats_table.push_back(friend_name_column);
+		friends_stats_table.push_back(friend_gamerscore_column);
+
+		// output table 2
+		outputTable(os, friends_stats_table);
+	}
 }
 
+
+/*  outputGameSummary function
+ *  --------------------------
+ *  Given a game and a vector of players who play that game,
+ *  generates a table comparing players by gamerscore (total
+ *  and game), victories achieved, and IGN. Outputs to the 
+ *  given ostream.
+ */
 void outputGameSummary(ostream& os, Game game, int game_id, vector<Player> players) {
-	sort(players.begin(), players.end(), comparePlayersByGamerscore);
+	
+	// only output table 1 if there are players who play
+	// this game
+	if (!players.empty()) {
 
-	vector<GamePlayRecord> records = extractGamePlayRecordsForGameID(players, game_id);
+		// sort players by gamerscore and extract gameplay records
+		sort(players.begin(), players.end(), comparePlayersByGamerscore);
+		vector<GamePlayRecord> records = extractGamePlayRecordsForGameID(players, game_id);
 
-	vector<string> player_name_column_strings;
-	vector<string> player_victories_column_strings;
-	vector<string> gamerscore_column_strings;
-	vector<string> total_gamerscore_column_strings;
-	vector<string> player_ign_column_strings;
+		// set up player name column
+		vector<string> player_name_column;
 
-	transform(players.begin(), players.end(), back_inserter(player_name_column_strings), generatePlayerNameString);
-	transform(records.begin(), records.end(), back_inserter(player_victories_column_strings), generateGamePlayRecordVictoryCountString);
-	transform(records.begin(), records.end(), back_inserter(gamerscore_column_strings), generateGamePlayRecordGamerscoreString);
-	transform(players.begin(), players.end(), back_inserter(total_gamerscore_column_strings), generatePlayerGamerscoreString);
-	transform(records.begin(), records.end(), back_inserter(player_ign_column_strings), generateGamePlayRecordIGNString);
+		// generate player name strings
+		transform(players.begin(), players.end(), back_inserter(player_name_column), 
+			generatePlayerNameString);
 
-	player_name_column_strings.insert(player_name_column_strings.begin(), "Player");
-	player_victories_column_strings.insert(player_victories_column_strings.begin(), "Victories");
-	gamerscore_column_strings.insert(gamerscore_column_strings.begin(), "Gamerscore (" + game.name() + ")");
-	total_gamerscore_column_strings.insert(total_gamerscore_column_strings.begin(), "Gamerscore (Total)");
-	player_ign_column_strings.insert(player_ign_column_strings.begin(), "IGN");
+		// add column header
+		const string player_name_column_header = "Player";
+		player_name_column.insert(player_name_column.begin(), 
+			player_name_column_header);
 
-	vector< vector<string> > player_stats_table;
-	player_stats_table.push_back(player_name_column_strings);
-	player_stats_table.push_back(player_victories_column_strings);
-	player_stats_table.push_back(gamerscore_column_strings);
-	player_stats_table.push_back(total_gamerscore_column_strings);
-	player_stats_table.push_back(player_ign_column_strings);
 
-	outputTable(os, player_stats_table);
-	os << endl;
+		// set up player victories won/total column
+		vector<string> player_victories_column;
 
-	vector<string> victory_name_column_strings;
-	vector<string> victory_win_count_column_strings;
+		// generate player victories won/total strings
+		transform(records.begin(), records.end(), back_inserter(player_victories_column), 
+			generateGamePlayRecordVictoryCountString);
 
+		// add column header
+		const string player_victories_column_header = "Victories";
+		player_victories_column.insert(player_victories_column.begin(), 
+			player_victories_column_header);
+
+
+		// set up player gamerscore (for game) column
+		vector<string> game_gamerscore_column;
+
+		// generate player gamerscore (for game) strings
+		transform(records.begin(), records.end(), back_inserter(game_gamerscore_column), 
+			generateGamePlayRecordGamerscoreString);
+
+		// add column header
+		const string game_gamerscore_column_header = "Gamerscore (" + game.name() + ")";
+		game_gamerscore_column.insert(game_gamerscore_column.begin(), 
+			game_gamerscore_column_header);
+
+
+		// set up player gamerscore (total) column
+		vector<string> gamerscore_column;
+
+		// generate player gamerscore (total) strings
+		transform(players.begin(), players.end(), back_inserter(gamerscore_column), 
+			generatePlayerGamerscoreString);
+
+		// add column header
+		const string gamerscore_column_header = "Gamerscore (Total)";
+		gamerscore_column.insert(gamerscore_column.begin(), gamerscore_column_header);
+
+
+		// sey up player IGN column
+		vector<string> player_ign_column;
+
+		// generate player ign strings
+		transform(records.begin(), records.end(), back_inserter(player_ign_column), 
+			generateGamePlayRecordIGNString);
+
+		// add column header
+		const string player_ign_column_header = "IGN";
+		player_ign_column.insert(player_ign_column.begin(), 
+			player_ign_column_header);
+
+
+		// populate table 1
+		vector< vector<string> > player_stats_table;
+		player_stats_table.push_back(player_name_column);
+		player_stats_table.push_back(player_victories_column);
+		player_stats_table.push_back(game_gamerscore_column);
+		player_stats_table.push_back(gamerscore_column);
+		player_stats_table.push_back(player_ign_column);
+
+		// output table 1
+		outputTable(os, player_stats_table);
+
+	}
+
+
+	// extract victories for this game
 	vector<Victory> victories = game.victories();
 
-	vector<int> victory_ids = game.victoryIDs();
-	vector<int> victory_counts = countGamePlayRecordsWithVictoryIDs(records, victory_ids);
+	// only output table 2 if game has victories
+	if (!victories.empty()) {
 
-	transform(victories.begin(), victories.end(), back_inserter(victory_name_column_strings), generateVictoryNameString);
-	transform(victory_counts.begin(), victory_counts.end(), back_inserter(victory_win_count_column_strings), generateVictoryWinCountString);
+		// new line to separate from last table
+		os << endl;
 
-	victory_name_column_strings.insert(victory_name_column_strings.begin(), "Victory");
-	victory_win_count_column_strings.insert(victory_win_count_column_strings.begin(), "Achieved");
 
-	vector< vector<string> > victory_stats_table;
-	victory_stats_table.push_back(victory_name_column_strings);
-	victory_stats_table.push_back(victory_win_count_column_strings);
+		// set up victory name column
+		vector<string> victory_name_column;
 
-	outputTable(os, victory_stats_table);
+		// generate victory name strings
+		transform(victories.begin(), victories.end(), 
+			back_inserter(victory_name_column), generateVictoryNameString);
+
+		// add column header
+		const string victory_name_column_header = "Victory";
+		victory_name_column.insert(victory_name_column.begin(), 
+			victory_name_column_header);
+
+
+		// extract victory ids for game
+		vector<int> victory_ids = game.victoryIDs();
+
+		// for each victory id, determine how many times it has been achieved
+		vector<int> times_achieved_counts = countGamePlayRecordsWithVictoryIDs(
+			records, victory_ids);
+
+
+		// set up times achieved column
+		vector<string> times_achieved_column;
+
+		// generate times achieved strings for victories
+		transform(times_achieved_counts.begin(), times_achieved_counts.end(), 
+			back_inserter(times_achieved_column), generateVictoryWinCountString);
+
+		// add column header
+		const string times_achieved_column_header = "Times Achieved";
+		times_achieved_column.insert(times_achieved_column.begin(), 
+			times_achieved_column_header);
+
+
+		// populate table 2
+		vector< vector<string> > victory_stats_table;
+		victory_stats_table.push_back(victory_name_column);
+		victory_stats_table.push_back(times_achieved_column);
+
+		// output table 2
+		outputTable(os, victory_stats_table);
+	}
 }
 
-void outputVictorySummary(ostream& os, Victory victory, int victory_id, Game game, int game_id, vector<Player> players) {
+
+/*  outputVictorySummary function
+ *  -----------------------------
+ *  Given a victory, a game, and a vector of players who play that
+ *  game, generates a table of players who have that victory, 
+ *  comparing them by gamerscore (total and game) and displaying IGNs.
+ *  Outputs to the given ostream.
+ */
+void outputVictorySummary(ostream& os, Victory victory, int victory_id, Game game, 
+	int game_id, vector<Player> players) {
+
+	// sort player by gamerscore and extract gameplay records
 	sort(players.begin(), players.end(), comparePlayersByGamerscore);
 
-	vector<GamePlayRecord> records = extractGamePlayRecordsForGameID(players, game_id);
+	// extract players who have this victory and their gameplay records
+	vector<Player> players_with_victory = extractPlayersWithVictoryID(
+		players, victory_id, game_id);
+	vector<GamePlayRecord> records = extractGamePlayRecordsForGameID(
+		players_with_victory, game_id);
 
-	vector<Player> players_with_victory = extractPlayersWithVictoryID(players, victory_id, game_id);
-	int player_count = players.size();
 
-	vector<string> player_name_column_strings;
-	vector<string> player_victories_column_strings;
-	vector<string> gamerscore_column_strings;
-	vector<string> total_gamerscore_column_strings;
-	vector<string> player_ign_column_strings;
+	// only output table if there are players with victory
+	if (!players_with_victory.empty()) {
 
-	transform(players.begin(), players.end(), back_inserter(player_name_column_strings), generatePlayerNameString);
-	transform(records.begin(), records.end(), back_inserter(player_victories_column_strings), generateGamePlayRecordVictoryCountString);
-	transform(records.begin(), records.end(), back_inserter(gamerscore_column_strings), generateGamePlayRecordGamerscoreString);
-	transform(players.begin(), players.end(), back_inserter(total_gamerscore_column_strings), generatePlayerGamerscoreString);
-	transform(records.begin(), records.end(), back_inserter(player_ign_column_strings), generateGamePlayRecordIGNString);
+		// set up player name column
+		vector<string> player_name_column;
 
-	player_name_column_strings.insert(player_name_column_strings.begin(), "Player");
-	player_victories_column_strings.insert(player_victories_column_strings.begin(), "Victories");
-	gamerscore_column_strings.insert(gamerscore_column_strings.begin(), "Gamerscore (" + game.name() + ")");
-	total_gamerscore_column_strings.insert(total_gamerscore_column_strings.begin(), "Gamerscore (Total)");
-	player_ign_column_strings.insert(player_ign_column_strings.begin(), "IGN");
+		// generate player name strings
+		transform(players_with_victory.begin(), players_with_victory.end(), 
+			back_inserter(player_name_column), generatePlayerNameString);
 
-	vector< vector<string> > player_stats_table;
-	player_stats_table.push_back(player_name_column_strings);
-	player_stats_table.push_back(player_victories_column_strings);
-	player_stats_table.push_back(gamerscore_column_strings);
-	player_stats_table.push_back(total_gamerscore_column_strings);
-	player_stats_table.push_back(player_ign_column_strings);
+		// add column header
+		const string player_name_column_header = "Player";
+		player_name_column.insert(player_name_column.begin(), 
+			player_name_column_header);
 
-	outputTable(os, player_stats_table);
+
+		// set up player gamerscore (for game) column
+		vector<string> game_gamerscore_column;
+
+		// generate player gamerscore (for game) strings
+		transform(records.begin(), records.end(), back_inserter(game_gamerscore_column), 
+			generateGamePlayRecordGamerscoreString);
+
+		// add column header
+		const string game_gamerscore_column_header = "Gamerscore (" + game.name() + ")";
+		game_gamerscore_column.insert(game_gamerscore_column.begin(), 
+			game_gamerscore_column_header);
+
+
+		// set up player gamerscore (total) column
+		vector<string> total_gamerscore_column;
+
+		// generate player gamerscore (total) strings
+		transform(players_with_victory.begin(), players_with_victory.end(), 
+			back_inserter(total_gamerscore_column), generatePlayerGamerscoreString);
+
+		// add column header
+		const string total_gamerscore_column_header = "Gamerscore (Total)";
+		total_gamerscore_column.insert(total_gamerscore_column.begin(), 
+			total_gamerscore_column_header);
+
+
+		// set up player IGN column
+		vector<string> player_ign_column;
+
+		// generate player IGN strings
+		transform(records.begin(), records.end(), back_inserter(player_ign_column), 
+			generateGamePlayRecordIGNString);
+
+		// add column header
+		const string player_ign_column_header = "IGN";
+		player_ign_column_strings.insert(player_ign_column.begin(), 
+			player_ign_column_header);
+
+		// populate table
+		vector< vector<string> > player_stats_table;
+		player_stats_table.push_back(player_name_column);
+		player_stats_table.push_back(game_gamerscore_column);
+		player_stats_table.push_back(total_gamerscore_column);
+		player_stats_table.push_back(player_ign_column);
+
+		// output table
+		outputTable(os, player_stats_table);
+
+	}
 }
 
+
+/*  outputPlayerComparison function
+ *  -------------------------------
+ *  Given a vector of players, generates a table comparing players by
+ *  gamerscore. Outputs to the given ostream.
+ */
 void outputPlayerComparison(ostream& os, vector<Player> players) {
+	// sort players by gamerscore
 	sort(players.begin(), players.end(), comparePlayersByGamerscore);
 
-	vector<string> player_name_column_strings;
-	vector<string> gamerscore_column_strings;
+	// set up player name column
+	vector<string> player_name_column;
 
-	transform(players.begin(), players.end(), back_inserter(player_name_column_strings), generatePlayerNameString);
-	transform(players.begin(), players.end(), back_inserter(gamerscore_column_strings), generatePlayerGamerscoreString);
+	// generate player name strings
+	transform(players.begin(), players.end(), back_inserter(player_name_column), 
+		generatePlayerNameString);
 
-	player_name_column_strings.insert(player_name_column_strings.begin(), "Player");
-	gamerscore_column_strings.insert(gamerscore_column_strings.begin(), "Gamerscore");
+	// add column header
+	const string player_name_column_header = "Player";
+	player_name_column.insert(player_name_column.begin(), 
+		player_name_column_header);
 
+
+	// set up player gamerscore column
+	vector<string> gamerscore_column;
+
+	// generate player gamerscore strings
+	transform(players.begin(), players.end(), back_inserter(gamerscore_column), 
+		generatePlayerGamerscoreString);
+
+	// add column header
+	const string gamerscore_column_header = "Gamerscore";
+	gamerscore_column.insert(gamerscore_column.begin(), gamerscore_column_header);
+
+
+	// populate table
 	vector< vector<string> > table;
-	table.push_back(player_name_column_strings);
-	table.push_back(gamerscore_column_strings);
+	table.push_back(player_name_column);
+	table.push_back(gamerscore_column);
 
+	// output table
 	outputTable(os, table);
 }
