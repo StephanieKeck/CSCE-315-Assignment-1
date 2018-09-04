@@ -1,8 +1,0 @@
-AddPlayer 1 "bob"
-AddGame 2 "tetris"
-AddVictory 2 3 "win" 5
-Plays 1 2 "bobx"
-WinVictory 1 2 3
-AddPlayer 2 "alice"
-AddFriend 1 2
-SummarizePlayer 1
