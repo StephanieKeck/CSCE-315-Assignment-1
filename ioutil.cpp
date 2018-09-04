@@ -185,7 +185,7 @@ void outputTable(ostream& os, vector< vector<string> > columns) {
 	// print headings first
 	int row_index = 0;
 
-	for (vector< vector<string> >::size_type column_index;
+	for (vector< vector<string> >::size_type column_index = 0;
 		column_index != columns.size(); ++column_index) {
 
 		// extract column
