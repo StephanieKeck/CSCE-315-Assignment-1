@@ -294,6 +294,9 @@ void outputTable(ostream& os, vector< vector<string> > columns) {
 		os << endl;
 		++row_index;
 	}
+
+	// end table with extra new line
+	os << endl;
 }
 
 
