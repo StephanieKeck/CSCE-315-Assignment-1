@@ -140,9 +140,9 @@ vector<GamePlayRecord> Player::gamePlayRecords() const {
 // ----------------
 
 
-/*  addFriend(Player player) function
+/*  addFriend(int player_id) function
  *  ---------------------------------
- *  Adds 'player' as a friend of this player.
+ *  Adds 'player_id' as a friend of this player.
  */
 void Player::addFriendID(int id) {
 	_friendIDs.push_back(id);

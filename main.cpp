@@ -157,8 +157,8 @@ int main() {
 				getID(i, line_of_input.end(), player_id2);
 
 				// get players
-				Player player1 = players.playerWithID(player_id1);
-				Player player2 = players.playerWithID(player_id2);
+				Player& player1 = players.playerWithID(player_id1);
+				Player& player2 = players.playerWithID(player_id2);
 
 				// set friend relationships
 				player1.addFriendID(player_id2);

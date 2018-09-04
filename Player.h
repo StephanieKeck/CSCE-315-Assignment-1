@@ -21,7 +21,7 @@
  *  * bool hasVictory(int game_id, int victory_id) - returns 
  *    whether the player has achieved the victory associated
  *    with 'victory_id' in the game associated with 'game_id'.
- *  * vector<int> friendIFs() - returns list of the player's
+ *  * vector<int> friendIDs() - returns list of the player's
  *    friends' IDs.
  *  * GamePlayRecord gamePlayRecordWithID(int id) - returns
  *    player's GamePlayRecord object for the game associated
@@ -31,7 +31,7 @@
  *
  *  Mutator Methods:
  *
- *  * void addFrient(Player player) - adds 'player' as a
+ *  * void addFriendID(int player_id) - adds 'player_id' as a
  *    friend of this player.
  *  * void addGamePlayRecord(int id, GamePlayRecord record) -
  *    adds GamePlayRecord 'record' for the game associated
