@@ -1,7 +1,7 @@
-#CSCE 315 508 Project 1
+# CSCE 315 508 Project 1
 
-###Stephanie Keck
-###UIN 526009919
+### Stephanie Keck
+### UIN 526009919
 
 To compile, run:
 
@@ -17,17 +17,17 @@ The program can the by run by
 
 on \*nix systems.
 
-##Acknowledgements
+## Acknowledgements
 
-###Accelerated C++ by Andrew Koenig and Barabara E. Moo.
+### Accelerated C++ by Andrew Koenig and Barabara E. Moo.
 
 Main C++ reference. The `space` and `not_space` functions were taken from it wholesale and the parsing functions of the form `get<item>` are similar to the `split` function introduced in Chapter 6.
 
-###http://www.cplusplus.com/
+### http://www.cplusplus.com/
 
 Online C++ reference.
 
-###Other References
+### Other References
 
 [c++ parse int from string [duplicate]](https://stackoverflow.com/questions/4442658/c-parse-int-from-string)
 
