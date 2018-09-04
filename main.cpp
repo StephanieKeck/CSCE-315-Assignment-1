@@ -308,8 +308,8 @@ int main() {
 					victory_id);
 
 				// calculate percentage of players who have victory
-				double victory_achieved_percentage = (double) players_with_victory.size() 
-					/ (double) players_who_play.size();
+				double victory_achieved_percentage = ((double) players_with_victory.size() 
+					/ (double) players_who_play.size()) * 100;
 
 				// initial output
 				cout << "Game: " << game.name() << endl
