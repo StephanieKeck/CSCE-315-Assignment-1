@@ -1,7 +1,7 @@
 # CSCE 315 508 Project 1
 
-### Stephanie Keck
-### UIN 526009919
+#### Stephanie Keck
+#### UIN 526009919
 
 To compile, run:
 
@@ -9,7 +9,7 @@ To compile, run:
 g++ -std=c++11 *.cpp -o <name-of-executable>
 ```
 
-The program can the by run by
+The program can then by run by
 
 ```
 ./<name-of-executable>
